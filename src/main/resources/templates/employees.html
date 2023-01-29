@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Employee Management</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row m-4">
+            <div class="col text-center border border-dark">
+                <h1><a href="/" class="text-dark">Employee Management</a></h1>
+            </div>
+        </div>
+        <div class="row m-4 border border-dark">
+            <div class="col text-center m-3">
+                <a href="/departments" class="btn btn-outline-primary btn-lg">Departments</a>
+            </div>
+            <div class="col text-center m-3">
+                <a href="/employees" class="btn btn-outline-primary btn-lg">Employees</a>
+            </div>
+        </div>
+
+        <div class="row m-4 border border-dark">
+
+            <div class="col-12 m-1 text-center" th:if="${!errors.isEmpty()}">
+                <p class="alert alert-danger" th:each="error : ${errors}" th:text="${error.message}">Error message</p>
+            </div>
+
+            <div class="col-3 text-center m-3">
+                <span class="h3">Add Employee</span>
+            </div>
+            <div class="col-7 text-center m-3">
+                <form action="/employees" method="POST">
+                    <div class="form-group row">
+                        <label for="firstName" class="col-3 col-form-label">
+                            First Name</label>
+                        <div class="col-9">
+                            <input type="text" name="firstName" id="firstName" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastName" class="col-3 col-form-label">
+                            Last Name</label>
+                        <div class="col-9">
+                            <input type="text" name="lastName" id="lastName" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="department" class="col-3 col-form-label">
+                            Department</label>
+                        <div class="col-9">
+                            <select id="department" name="departmentId" class="form-control">
+                                <option th:each="department : ${departments}" th:value="${department.id}" 
+                                th:text="${department.name}">Department Name</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="age" class="col-3 col-form-label">
+                            Age</label>
+                        <div class="col-9">
+                            <input type="number" name="age" id="age" class="form-control" value="0" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-3 col-form-label">
+                            Email</label>
+                        <div class="col-9">
+                            <input type="email" name="email" id="email" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="monthlySalary" class="col-3 col-form-label">
+                            Monthly Salary</label>
+                        <div class="col-9">
+                            <input type="number" name="monthlySalary" id="monthlySalary" class="form-control" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Employee</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row m-4 border border-dark">
+            <div class="col text-center m-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Department</th>
+                            <th>Age</th>
+                            <th>Email</th>
+                            <th>Monthly Salary</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="employee : ${employees}">
+                            <td th:text="${employee.id}">Employee ID</td>
+                            <td th:text="${employee.firstName}">Employee First Name</td>
+                            <td th:text="${employee.lastName}">Employee Last Name</td>
+                            <td th:text="${employee.department != null ? employee.department.name : 'Not Set'}">Employee Department</td>
+                            <td th:text="${employee.age}">Employee Age</td>
+                            <td th:text="${employee.email}">Employee Email</td>
+                            <td th:text="${employee.monthlySalary}">Employee Monthly Salary</td>
+                            <td><a href="#" th:href="@{/employees/editEmployee(id=${employee.id})}">Edit</a></td>
+                            <td><a href="#" th:href="@{/employees/deleteEmployee(id=${employee.id})}">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
