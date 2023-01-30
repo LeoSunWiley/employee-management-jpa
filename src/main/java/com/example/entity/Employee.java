@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -108,4 +109,23 @@ public class Employee {
     public void setDepartment(Department department) {
         this.department = department;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(age, email, firstName, id, lastName, monthlySalary);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		return Objects.equals(age, other.age) && Objects.equals(email, other.email)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(monthlySalary, other.monthlySalary);
+	}
 }
